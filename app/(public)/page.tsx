@@ -52,7 +52,7 @@ export default function HomePage() {
             <p className="text-slate-600 dark:text-slate-400 text-base md:text-lg max-w-md mb-8 leading-relaxed">
               Check any vehicle by VIN and uncover important vehicle history, specifications, and potential red flags before you buy.
             </p>
-            <VinSearchBar dark />
+            <VinSearchBar />
             <p className="mt-4 text-xs text-slate-500 dark:text-slate-600">
               <Link href="/vin-check" className="underline hover:text-[#c4953a] transition-colors">Where can I find my VIN?</Link>
             </p>
@@ -66,6 +66,7 @@ export default function HomePage() {
                   src="/hero-car.jpg"
                   alt="Luxury vehicle — RideChecks vehicle history reports"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                   priority
                 />
@@ -166,7 +167,7 @@ export default function HomePage() {
               <p className="text-xs text-slate-400 dark:text-slate-500">Generated 21 Aug 2026</p>
             </div>
             <div className="relative w-full h-36 rounded-xl overflow-hidden mb-3">
-              <Image src="/report-car.jpg" alt="2021 Honda CR-V" fill className="object-cover" />
+              <Image src="/report-car.jpg" alt="2021 Honda CR-V" fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover" />
             </div>
             <h3 className="font-bold text-slate-900 dark:text-white text-lg">2021 Honda CR-V EX-L AWD</h3>
             <p className="text-xs text-slate-400 font-mono mb-3">2HKRW2H8XMH512094</p>
@@ -218,7 +219,7 @@ export default function HomePage() {
       <section className="max-w-6xl mx-auto px-4 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-lg">
-            <Image src="/inspect.jpg" alt="Buyer inspecting a vehicle before purchase" fill className="object-cover" />
+            <Image src="/inspect.jpg" alt="Buyer inspecting a vehicle before purchase" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#080c18]/40 to-transparent" />
           </div>
           <div>
