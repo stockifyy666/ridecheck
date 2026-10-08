@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 120" fill="none">
+
+  <!-- ── CAR SILHOUETTE (sleek modern sedan) ── -->
+  <g transform="translate(2, 10)">
+    <!-- Main body lower -->
+    <path d="M10 68 Q12 80 22 84 L152 84 Q162 80 164 68 L164 56 L148 52 L132 44 Q116 26 92 22 L58 22 Q36 22 24 36 L10 56 Z"
+          fill="#0c1220"/>
+    <!-- Cabin / roof -->
+    <path d="M28 56 Q36 30 60 24 L90 22 Q112 22 126 38 L142 56 Z"
+          fill="#141f38"/>
+    <!-- Front windshield -->
+    <path d="M36 54 Q42 32 62 26 L84 24 L82 54 Z"
+          fill="#c4953a" opacity="0.25"/>
+    <!-- Rear windshield -->
+    <path d="M84 24 L118 26 Q132 36 138 54 L108 54 Z"
+          fill="#c4953a" opacity="0.2"/>
+    <!-- Side windows glare -->
+    <path d="M38 52 L46 30 L56 28 L52 52 Z" fill="white" opacity="0.06"/>
+    <!-- Door seam -->
+    <line x1="88" y1="54" x2="90" y2="84" stroke="#1e2d50" strokeWidth="1.5"/>
+    <!-- Headlight strip -->
+    <path d="M152 48 L163 55" stroke="#c4953a" strokeWidth="3" strokeLinecap="round"/>
+    <path d="M154 52 L163 57" stroke="#c4953a" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+    <!-- Tail light -->
+    <rect x="10" y="60" width="3" height="14" rx="1.5" fill="#c4953a" opacity="0.8"/>
+    <!-- Front bumper grille -->
+    <rect x="152" y="66" width="13" height="5" rx="2" fill="#1a2a45"/>
+    <rect x="153" y="67" width="11" height="3" rx="1" fill="#c4953a" opacity="0.4"/>
+    <!-- Hood line -->
+    <path d="M130 56 Q148 54 163 57" fill="none" stroke="#1e3060" strokeWidth="1"/>
+    <!-- Spoiler hint -->
+    <path d="M12 58 L10 65" stroke="#c4953a" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+
+    <!-- Front wheel -->
+    <circle cx="44" cy="86" r="16" fill="#080c18"/>
+    <circle cx="44" cy="86" r="12" fill="#1a2540"/>
+    <circle cx="44" cy="86" r="7" fill="#2a3860"/>
+    <circle cx="44" cy="86" r="3.5" fill="#c4953a" opacity="0.8"/>
+    <circle cx="44" cy="86" r="1.5" fill="#080c18"/>
+    <!-- Spoke lines front wheel -->
+    <line x1="44" y1="79" x2="44" y2="93" stroke="#c4953a" strokeWidth="1" opacity="0.5"/>
+    <line x1="37" y1="86" x2="51" y2="86" stroke="#c4953a" strokeWidth="1" opacity="0.5"/>
+    <line x1="39" y1="81" x2="49" y2="91" stroke="#c4953a" strokeWidth="1" opacity="0.5"/>
+    <line x1="49" y1="81" x2="39" y2="91" stroke="#c4953a" strokeWidth="1" opacity="0.5"/>
+
+    <!-- Rear wheel -->
+    <circle cx="130" cy="86" r="16" fill="#080c18"/>
+    <circle cx="130" cy="86" r="12" fill="#1a2540"/>
+    <circle cx="130" cy="86" r="7" fill="#2a3860"/>
+    <circle cx="130" cy="86" r="3.5" fill="#c4953a" opacity="0.8"/>
+    <circle cx="130" cy="86" r="1.5" fill="#080c18"/>
+    <!-- Spoke lines rear wheel -->
+    <line x1="130" y1="79" x2="130" y2="93" stroke="#c4953a" strokeWidth="1" opacity="0.5"/>
+    <line x1="123" y1="86" x2="137" y2="86" stroke="#c4953a" strokeWidth="1" opacity="0.5"/>
+    <line x1="125" y1="81" x2="135" y2="91" stroke="#c4953a" strokeWidth="1" opacity="0.5"/>
+    <line x1="135" y1="81" x2="125" y2="91" stroke="#c4953a" strokeWidth="1" opacity="0.5"/>
+
+    <!-- Ground shadow -->
+    <ellipse cx="87" cy="103" rx="80" ry="5" fill="#0a0f1e" opacity="0.15"/>
+  </g>
+
+  <!-- ── MAGNIFYING GLASS WITH CHECKMARK ── -->
+  <g transform="translate(178, 4)">
+    <!-- Outer subtle glow -->
+    <circle cx="54" cy="54" r="46" fill="#c4953a" opacity="0.06"/>
+    <!-- Glass ring -->
+    <circle cx="54" cy="54" r="40" fill="white" stroke="#c4953a" strokeWidth="4"/>
+    <!-- Inner circle accent -->
+    <circle cx="54" cy="54" r="33" fill="#faf8f4" stroke="#c4953a" strokeWidth="1" opacity="0.3"/>
+    <!-- Bold checkmark -->
+    <path d="M33 54 L47 68 L75 36"
+          stroke="#c4953a" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+    <!-- Inner glow highlight -->
+    <path d="M33 54 L47 68 L75 36"
+          stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.4"/>
+    <!-- Handle outer (dark) -->
+    <line x1="84" y1="84" x2="107" y2="107" stroke="#0c1220" strokeWidth="11" strokeLinecap="round"/>
+    <!-- Handle inner -->
+    <line x1="84" y1="84" x2="107" y2="107" stroke="#1a2540" strokeWidth="7" strokeLinecap="round"/>
+    <!-- Gold handle tip -->
+    <circle cx="107" cy="107" r="5" fill="#c4953a"/>
+  </g>
+
+  <!-- ── BRAND NAME TEXT ── -->
+  <!-- "Ride" dark navy -->
+  <text x="300" y="76"
+        font-family="'Arial Black', 'Franklin Gothic Heavy', Impact, 'Haettenschweiler', Arial, sans-serif"
+        font-weight="900"
+        font-size="62"
+        fill="#0c1220">Ride</text>
+  <!-- "Checks" gold -->
+  <text x="300" y="76"
+        font-family="'Arial Black', 'Franklin Gothic Heavy', Impact, 'Haettenschweiler', Arial, sans-serif"
+        font-weight="900"
+        font-size="62"
+        fill="#c4953a"
+        dx="152">Checks</text>
+
+  <!-- Tagline below text -->
+  <text x="301" y="97"
+        font-family="Arial, sans-serif"
+        font-weight="500"
+        font-size="12.5"
+        fill="#8a9ab5"
+        letter-spacing="3">VEHICLE HISTORY REPORTS</text>
+
+  <!-- Divider dot between Ride and Checks -->
+  <circle cx="294" cy="65" r="3.5" fill="#c4953a" opacity="0.0"/>
+
+</svg>
