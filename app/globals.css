@@ -66,3 +66,30 @@ html {
 .navy-bg {
   background: var(--navy);
 }
+
+/* Thin themed scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c4953a;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0e1628;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #1e2d4a;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #c4953a;
+}

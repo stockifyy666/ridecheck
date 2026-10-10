@@ -10,16 +10,19 @@ export interface Order {
   package_price: number
   status: OrderStatus
   report_url: string | null
+  notes: string | null
+  email_sent_at: string | null
+  email_sent_count: number
   created_at: string
   updated_at: string
 }
 
 export const PACKAGES = [
   {
-    id: 'starter',
-    name: 'Starter',
-    price: 49.99,
-    delivery: '2–4 hours',
+    id: 'essential',
+    name: 'Essential',
+    price: 44.99,
+    delivery: '1–2 hours',
     features: [
       'VIN Decoder',
       'Basic Vehicle Specifications',
@@ -32,12 +35,12 @@ export const PACKAGES = [
     highlight: false,
   },
   {
-    id: 'essential',
-    name: 'Essential',
-    price: 54.99,
-    delivery: '1–2 hours',
+    id: 'instant',
+    name: 'Instant',
+    price: 49.99,
+    delivery: '30 minutes',
     features: [
-      'Everything in Starter, plus:',
+      'Everything in Essential, plus:',
       'Full Accident History',
       'Service & Maintenance Records',
       'Market Valuation',
@@ -50,20 +53,19 @@ export const PACKAGES = [
     highlight: true,
   },
   {
-    id: 'professional',
-    name: 'Professional',
+    id: 'premium',
+    name: 'Premium',
     price: 59.99,
-    delivery: '1–2 hours',
+    delivery: '30 minutes',
     features: [
-      'Everything in Essential, plus:',
-      'Full Accident History',
-      'Service & Maintenance Records',
-      'Market Valuation',
-      'Import/Export Records',
-      'Fleet History Check',
-      'Technical Specifications',
-      'Recall Information',
-      'Priority Support',
+      'Everything in Instant, plus:',
+      'Comprehensive Ownership History',
+      'Lien & Financing Records',
+      'Detailed Auction Records',
+      'Frame & Structural Damage Check',
+      'Airbag Deployment History',
+      'Dedicated Report Analyst',
+      'VIP Priority Support',
     ],
     highlight: false,
   },
@@ -84,7 +86,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'How long does it take to receive my report?',
-    a: 'Starter reports are delivered in 2–4 hours. Essential and Professional reports are delivered in 1–2 hours after order confirmation.',
+    a: 'Essential reports are delivered in 1–2 hours. Instant and Premium reports are delivered in 30 minutes after order confirmation.',
   },
   {
     q: 'How accurate is a VIN report?',

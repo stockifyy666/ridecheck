@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { RiFileListLine, RiTimeLine, RiLoader4Line, RiCheckLine } from 'react-icons/ri'
 import Link from 'next/link'
+import DashboardChart from './DashboardChart'
 
 export const dynamic = 'force-dynamic'
 
@@ -22,7 +23,26 @@ async function getStats() {
       .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
       .slice(0, 5)
 
-    return { total, pending, processing, completed, revenue, recent }
+    // Build last 7 days chart data
+    const days: { label: string; count: number; revenue: number }[] = []
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date()
+      d.setDate(d.getDate() - i)
+      d.setHours(0, 0, 0, 0)
+      const next = new Date(d)
+      next.setDate(next.getDate() + 1)
+      const dayOrders = data.filter(o => {
+        const t = new Date(o.created_at).getTime()
+        return t >= d.getTime() && t < next.getTime()
+      })
+      days.push({
+        label: d.toLocaleDateString('en-US', { weekday: 'short' }),
+        count: dayOrders.length,
+        revenue: dayOrders.reduce((s, o) => s + (Number(o.package_price) || 0), 0),
+      })
+    }
+
+    return { total, pending, processing, completed, revenue, recent, days }
   } catch {
     return null
   }
@@ -74,8 +94,8 @@ export default async function AdminPage() {
         ))}
       </div>
 
-      {/* Revenue + Recent */}
-      <div className="grid lg:grid-cols-4 gap-4">
+      {/* Revenue + Chart row */}
+      <div className="grid lg:grid-cols-4 gap-4 mb-4">
         <div className="bg-white dark:bg-[#0e1628] border border-slate-200 dark:border-white/10 rounded-xl p-5 shadow-sm">
           <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mb-1">Total Revenue</p>
           <p className="text-3xl font-black text-[#c4953a]">${stats?.revenue?.toFixed(2) ?? '0.00'}</p>
@@ -83,32 +103,52 @@ export default async function AdminPage() {
         </div>
 
         <div className="lg:col-span-3 bg-white dark:bg-[#0e1628] border border-slate-200 dark:border-white/10 rounded-xl p-5 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-semibold text-slate-800 dark:text-white">Recent Orders</p>
-            <Link href="/admin/orders" className="text-xs text-[#c4953a] hover:underline">View all →</Link>
-          </div>
-          {stats?.recent?.length ? (
-            <div className="space-y-2.5">
-              {stats.recent.map((o: Record<string, unknown>, i) => (
-                <div key={i} className="flex items-center justify-between py-2 border-b border-slate-100 dark:border-white/5 last:border-0">
-                  <div>
-                    <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{String(o.full_name ?? '—')}</p>
-                    <p className="text-xs text-slate-400 dark:text-slate-500">{new Date(String(o.created_at)).toLocaleDateString()}</p>
-                  </div>
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${
-                    o.status === 'completed'
-                      ? 'bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400'
-                      : o.status === 'processing'
-                      ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400'
-                      : 'bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400'
-                  }`}>{String(o.status)}</span>
-                </div>
-              ))}
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-sm font-semibold text-slate-800 dark:text-white">Orders (last 7 days)</p>
+            <div className="flex items-center gap-3 text-xs text-slate-400 dark:text-slate-500">
+              <span className="flex items-center gap-1.5">
+                <span className="inline-block w-3 h-2 rounded bg-[#c4953a]/25" /> Orders
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="inline-block w-4 border-t-2 border-[#c4953a]" /> Revenue
+              </span>
             </div>
+          </div>
+          {stats?.days ? (
+            <DashboardChart days={stats.days} />
           ) : (
-            <p className="text-sm text-slate-400 text-center py-4">No orders yet</p>
+            <div className="h-32 flex items-center justify-center text-sm text-slate-400">No data</div>
           )}
         </div>
+      </div>
+
+      {/* Recent Orders */}
+      <div className="bg-white dark:bg-[#0e1628] border border-slate-200 dark:border-white/10 rounded-xl p-5 shadow-sm">
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-sm font-semibold text-slate-800 dark:text-white">Recent Orders</p>
+          <Link href="/admin/orders" className="text-xs text-[#c4953a] hover:underline">View all →</Link>
+        </div>
+        {stats?.recent?.length ? (
+          <div className="space-y-2.5">
+            {stats.recent.map((o: Record<string, unknown>, i) => (
+              <div key={i} className="flex items-center justify-between py-2 border-b border-slate-100 dark:border-white/5 last:border-0">
+                <div>
+                  <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{String(o.full_name ?? '—')}</p>
+                  <p className="text-xs text-slate-400 dark:text-slate-500">{new Date(String(o.created_at)).toLocaleDateString()}</p>
+                </div>
+                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${
+                  o.status === 'completed'
+                    ? 'bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400'
+                    : o.status === 'processing'
+                    ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400'
+                    : 'bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400'
+                }`}>{String(o.status)}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-slate-400 text-center py-4">No orders yet</p>
+        )}
       </div>
     </div>
   )

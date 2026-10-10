@@ -17,13 +17,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       return NextResponse.json({ error: 'Invalid order ID' }, { status: 400 })
     }
     const body = await req.json()
-    const { status, report_url } = body
+    const { status, report_url, notes } = body
     const updates: Record<string, unknown> = { updated_at: new Date().toISOString() }
-    if (status) {
+    if (status !== undefined) {
       if (!VALID_STATUSES.has(status)) return NextResponse.json({ error: 'Invalid status' }, { status: 400 })
       updates.status = status
     }
     if (report_url !== undefined) updates.report_url = report_url
+    if (notes !== undefined) updates.notes = notes
     const { data, error } = await getAdmin().from('orders').update(updates).eq('id', id).select().single()
     if (error) throw error
     return NextResponse.json({ success: true, order: data })

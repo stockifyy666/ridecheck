@@ -1,20 +1,26 @@
 'use client'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import {
   RiDashboardLine, RiFileListLine, RiLogoutBoxLine,
-  RiMenuLine, RiCloseLine, RiShieldCheckLine,
+  RiMenuLine, RiCloseLine, RiShieldCheckLine, RiSettingsLine,
 } from 'react-icons/ri'
 import toast from 'react-hot-toast'
 import ThemeToggle from '@/components/ThemeToggle'
+import NewOrderNotifier from '@/components/NewOrderNotifier'
 
 const NAV = [
   { href: '/admin', label: 'Dashboard', icon: RiDashboardLine },
   { href: '/admin/orders', label: 'Orders', icon: RiFileListLine },
+  { href: '/admin/settings', label: 'Settings', icon: RiSettingsLine },
 ]
 
-function Sidebar({ onClose }: { onClose?: () => void }) {
+function Sidebar({ onClose, newOrderCount, clearBadge }: {
+  onClose?: () => void
+  newOrderCount: number
+  clearBadge: () => void
+}) {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -58,11 +64,12 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
         {NAV.map(({ href, label, icon: Icon }) => {
           const active = pathname === href || (href !== '/admin' && pathname.startsWith(href))
+          const isOrders = href === '/admin/orders'
           return (
             <Link
               key={href}
               href={href}
-              onClick={onClose}
+              onClick={() => { onClose?.(); if (isOrders) clearBadge() }}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 active
                   ? 'bg-[#c4953a]/10 text-[#c4953a] border border-[#c4953a]/20'
@@ -70,7 +77,12 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
               }`}
             >
               <Icon size={17} />
-              {label}
+              <span className="flex-1">{label}</span>
+              {isOrders && newOrderCount > 0 && (
+                <span className="text-[10px] font-bold bg-red-500 text-white rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+                  {newOrderCount > 99 ? '99+' : newOrderCount}
+                </span>
+              )}
             </Link>
           )
         })}
@@ -93,21 +105,32 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [newOrderCount, setNewOrderCount] = useState(0)
+
+  const handleNewOrder = useCallback(() => {
+    setNewOrderCount(n => n + 1)
+  }, [])
+
+  const clearBadge = useCallback(() => {
+    setNewOrderCount(0)
+  }, [])
 
   if (pathname === '/admin/login') return <>{children}</>
 
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-[#0a0f1e] overflow-hidden">
+      <NewOrderNotifier onNewOrder={handleNewOrder} />
+
       {/* Desktop sidebar */}
       <div className="hidden lg:flex lg:flex-col w-56 shrink-0">
-        <Sidebar />
+        <Sidebar newOrderCount={newOrderCount} clearBadge={clearBadge} />
       </div>
 
       {/* Mobile sidebar overlay */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 flex lg:hidden">
           <div className="w-56 flex flex-col">
-            <Sidebar onClose={() => setMobileOpen(false)} />
+            <Sidebar onClose={() => setMobileOpen(false)} newOrderCount={newOrderCount} clearBadge={clearBadge} />
           </div>
           <div className="flex-1 bg-black/50" onClick={() => setMobileOpen(false)} />
         </div>
@@ -128,8 +151,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <div className="h-8 w-8 rounded-full bg-[#c4953a]/15 border border-[#c4953a]/30 flex items-center justify-center">
-              <RiShieldCheckLine size={15} className="text-[#c4953a]" />
+            <div className="relative">
+              <div className="h-8 w-8 rounded-full bg-[#c4953a]/15 border border-[#c4953a]/30 flex items-center justify-center">
+                <RiShieldCheckLine size={15} className="text-[#c4953a]" />
+              </div>
+              {newOrderCount > 0 && (
+                <span className="absolute -top-1 -right-1 text-[9px] font-bold bg-red-500 text-white rounded-full min-w-[14px] h-[14px] flex items-center justify-center px-0.5">
+                  {newOrderCount > 9 ? '9+' : newOrderCount}
+                </span>
+              )}
             </div>
           </div>
         </header>

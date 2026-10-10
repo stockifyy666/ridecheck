@@ -66,7 +66,12 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
       `,
     })
 
-    await db.from('orders').update({ status: 'completed', updated_at: new Date().toISOString() }).eq('id', id)
+    await db.from('orders').update({
+      status: 'completed',
+      email_sent_at: new Date().toISOString(),
+      email_sent_count: (order.email_sent_count || 0) + 1,
+      updated_at: new Date().toISOString(),
+    }).eq('id', id)
     return NextResponse.json({ success: true })
   } catch (err) {
     console.error(err)
